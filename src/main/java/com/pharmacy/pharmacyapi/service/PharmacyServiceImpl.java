@@ -33,16 +33,20 @@ public class PharmacyServiceImpl implements PharmacyService {
     @Override
     public List<PharmacyDto> pharmacy(String city, String citySlug, String county, String countySlug, Long timestamp) {
         if (TimeUtil.isOutOfWorkingHour(timestamp)) {
+            System.out.println("isOutOfWorkingHour nightPharmacyAccessKey:"+nightPharmacyAccessKey);
             PharmacyResponse pharmacyResponse = nightPharmacyClient.pharmacy(nightPharmacyAccessKey, citySlug, countySlug);
             if (pharmacyResponse == null || CollectionUtils.isEmpty(pharmacyResponse.getData())) {
+                System.out.println("Empty Data:"+pharmacyResponse);
                 return Collections.emptyList();
             }
+            System.out.println("pharmacyResponse:"+pharmacyResponse);
             return pharmacyResponse
                     .getData()
                     .stream()
                     .map(pharmacyDtoConverter::convert)
                     .collect(Collectors.toList());
         } else {
+            System.out.println("isNotOutOfWorkingHour");
             List<FilePharmacyCityDto> filePharmacyCityList = fileDataDto.getData();
 
             List<PharmacyDto> pharmacyDtoList = new ArrayList<>();
