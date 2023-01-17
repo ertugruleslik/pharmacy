@@ -15,7 +15,7 @@
 	<name>pharmacy-api</name>
 	<description>Pharmacy API</description>
 	<properties>
-		<java.version>11</java.version>
+		<java.version>1.8</java.version>
 		<spring-cloud.version>2021.0.0</spring-cloud.version>
 	</properties>
 	<dependencies>
